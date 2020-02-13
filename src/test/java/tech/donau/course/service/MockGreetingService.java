@@ -1,19 +1,20 @@
 package tech.donau.course.service;
 
+import io.quarkus.test.Mock;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.util.UUID;
 
+@Mock
 @ApplicationScoped
-public class GreetingService {
+public class MockGreetingService extends GreetingService {
 
-    public String sayHello() {
-        return "hello";
-    }
-
+    @Override
     public String sayHello(String name) {
         return String.format("Hello %s, your id is %s",
                 name,
-                UUID.randomUUID().toString()
+                "1234"
         );
+
     }
 }
