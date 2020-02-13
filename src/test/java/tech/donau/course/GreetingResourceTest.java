@@ -1,9 +1,7 @@
 package tech.donau.course;
 
-import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
-import tech.donau.course.service.GreetingService;
 
 import java.util.UUID;
 
@@ -13,9 +11,6 @@ import static org.hamcrest.CoreMatchers.startsWith;
 
 @QuarkusTest
 public class GreetingResourceTest {
-
-    @Mock
-    GreetingService greetingService;
 
     @Test
     public void testHelloEndpoint() {
