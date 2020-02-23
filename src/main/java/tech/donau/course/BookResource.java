@@ -1,6 +1,6 @@
 package tech.donau.course;
 
-import io.netty.util.internal.StringUtil;
+import tech.donau.course.data.Book;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,34 +11,35 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Path("/book")
 public class BookResource {
 
-    private static ArrayList<String> books = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
 
     static {
-        books.add("The Freelancer's bible");
+        books.add(new Book("The Freelancer's bible", "IDK"));
     }
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getBooks() {
-        return StringUtil.join(",", books).toString();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Book> getBooks() {
+        return books;
     }
 
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public String addBook(String book) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Book addBook(Book book) {
         books.add(book);
         return book;
     }
 
     @PUT
     @Path("/{id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String updateBook(@PathParam("id") Integer index, String book) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Book updateBook(@PathParam("id") Integer index, Book book) {
         books.remove((int) index);
         books.add(index, book);
         return book;
@@ -46,8 +47,8 @@ public class BookResource {
 
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String deleteBook(@PathParam("id") Integer index) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Book deleteBook(@PathParam("id") Integer index) {
         return books.remove((int) index);
     }
 }
