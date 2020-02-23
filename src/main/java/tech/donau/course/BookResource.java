@@ -1,7 +1,11 @@
 package tech.donau.course;
 
 import tech.donau.course.data.Book;
+import tech.donau.course.service.BookService;
 
+import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,10 +16,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Path("/book")
 public class BookResource {
+
+    @Inject
+    BookService bookService;
 
     private static ArrayList<Book> books = new ArrayList<>();
 
@@ -37,7 +43,8 @@ public class BookResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addBook(Book book) {
-        if(books.size() > 5) {
+        bookService.checkBook(book);
+        if (books.size() > 5) {
             return Response.status(400).entity("No more than 5 books allowed").build();
         }
         books.add(book);
