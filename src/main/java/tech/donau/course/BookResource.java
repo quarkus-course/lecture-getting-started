@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,16 +25,23 @@ public class BookResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<Book> getBooks() {
-        return books;
+    public Response getBooks() {
+        return Response.status(202)
+                .entity(books)
+                .build();
+
+//        return Response.ok(books).build();
     }
 
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Book addBook(Book book) {
+    public Response addBook(Book book) {
+        if(books.size() > 5) {
+            return Response.status(400).entity("No more than 5 books allowed").build();
+        }
         books.add(book);
-        return book;
+        return Response.ok(book).build();
     }
 
     @PUT
