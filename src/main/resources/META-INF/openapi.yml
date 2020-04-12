@@ -1,0 +1,120 @@
+---
+openapi: 3.0.1
+info:
+  title: Some static API
+  description: Our test API description
+  version: "1.2"
+paths:
+  /book:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionBook'
+    post:
+      responses:
+        "200":
+          description: OK
+  /book/{id}:
+    put:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /crypto:
+    get:
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionCrypto'
+  /hello:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /hello/{name}:
+    get:
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        author:
+          pattern: \S
+          type: string
+          nullable: false
+        name:
+          pattern: \S
+          type: string
+          nullable: false
+        pages:
+          format: int32
+          minimum: 1
+          type: integer
+    CollectionBook:
+      $ref: '#/components/schemas/CollectionBook'
+    Crypto:
+      type: object
+      properties:
+        id:
+          type: string
+        price_usd:
+          format: double
+          type: number
+        symbol:
+          type: string
+    CollectionCrypto:
+      $ref: '#/components/schemas/CollectionCrypto'

@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Path("/book")
 public class BookResource {
@@ -31,11 +32,8 @@ public class BookResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBooks() {
-        return Response.status(202)
-                .entity(books)
-                .build();
-
+    public Collection<Book> getBooks() {
+        return books;
 //        return Response.ok(books).build();
     }
 
